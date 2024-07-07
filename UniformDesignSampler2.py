@@ -43,6 +43,7 @@ class UniformDesignSampler(BaseSampler):
         self._current_trial = 0
 
     def reseed_rng(self) -> None:
+        self._rng = LazyRandomState() #LazyRandomStateで乱数生成器を再初期化
         self._qmc_rng = qmc.LatinHypercube(d=self._num_params, seed=self._rng.rng) #その値をLHCのseedに指定
         self._samples = self._qmc_rng.random(n=self._n_min_trials)
 #ここまで修正箇所
